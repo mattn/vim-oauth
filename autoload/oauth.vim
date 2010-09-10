@@ -1,3 +1,13 @@
+" oauth
+" Last Change: 2010-09-10
+" Maintainer:   Yasuhiro Matsumoto <mattn.jp@gmail.com>
+" License:      This file is placed in the public domain.
+" Reference:
+"   http://tools.ietf.org/rfc/rfc5849.txt
+
+let s:save_cpo = &cpo
+set cpo&vim
+
 function! s:nr2byte(nr)
   if a:nr < 0x80
     return nr2char(a:nr)
@@ -185,3 +195,6 @@ function! oauth#sendData(url, consumer_key, consumer_secret, access_token, acces
   let res = s:doHttp(a:url, {}, query, {}, 0)
   return res
 endfunction
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
