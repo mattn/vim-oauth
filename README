@@ -1,8 +1,42 @@
 vim-oauth: oauth access library for vim
 
+Description:
+
+    TODO: add document
+
+    oauth#requestToken(url, consumer_key, consumer_secret)
+
+      url
+	  consumer_key
+	  consumer_secret
+
+    oauth#accessToken(url, consumer_key, consumer_secret, request_token, request_token_secret, params)
+
+      url
+      request_token
+	  request_token_secret
+	  params
+
+    oauth#sendData(url, consumer_key, consumer_secret, access_token, access_token_secret, params)
+
+      url
+	  consumer_key
+	  consumer_secret
+	  access_token
+	  access_token_secret
+	  params
+
+Example:
+
+    see 'twitter.vim'
+
+Require:
+
+    curl command : http://curl.haxx.se/
+
 Thanks To:
 
-    Yukihiro Nakadaira
+    Yukihiro Nakadaira : http://sites.google.com/site/yukihironakadaira/
         autoload/base64.vim (I added small changes)
         autoload/hmac.vim
         autoload/sha1.vim
