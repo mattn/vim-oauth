@@ -1,0 +1,9 @@
+vim-oauth: oauth access library for vim
+
+Thanks To:
+
+    Yukihiro Nakadaira
+        autoload/base64.vim (I added small changes)
+        autoload/hmac.vim
+        autoload/sha1.vim
+
