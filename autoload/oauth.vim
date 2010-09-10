@@ -120,7 +120,7 @@ function! s:doHttp(url, getdata, postdata, headdata, returnheader)
   return res
 endfunction
 
-function! oauth#request_token(url, consumer_key, consumer_secret)
+function! oauth#requestToken(url, consumer_key, consumer_secret)
   let query = {}
   let time_stamp = localtime()
   let nonce = time_stamp . " " . time_stamp
@@ -143,7 +143,7 @@ function! oauth#request_token(url, consumer_key, consumer_secret)
   return [request_token, request_token_secret]
 endfunction
 
-function! oauth#access_token(url, consumer_key, consumer_secret, request_token, request_token_secret, params)
+function! oauth#accessToken(url, consumer_key, consumer_secret, request_token, request_token_secret, params)
   let query = {}
   let time_stamp = localtime()
   let nonce = time_stamp . " " . time_stamp
