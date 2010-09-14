@@ -5,8 +5,8 @@ let access_token_url = "https://api.twitter.com/oauth/access_token"
 let auth_url =  "https://twitter.com/oauth/authorize"
 let post_url = "https://api.twitter.com/1/statuses/update.xml"
 
-let consumer_key = "CONSUMER_KEY"
-let consumer_secret = "CONSUMER_SECRET"
+let consumer_key = $CONSUMER_KEY
+let consumer_secret = $CONSUMER_SECRET
 
 let [request_token, request_token_secret] = oauth#requestToken(request_token_url, consumer_key, consumer_secret)
 if has("win32") || has("win64")
