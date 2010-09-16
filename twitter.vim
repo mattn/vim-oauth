@@ -1,4 +1,4 @@
-set rtp+=.
+set rtp+=webapi-vim
 
 let request_token_url = "https://twitter.com/oauth/request_token"
 let access_token_url = "https://api.twitter.com/oauth/access_token"
