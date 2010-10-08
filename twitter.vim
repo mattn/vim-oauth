@@ -17,5 +17,5 @@ endif
 let verifier = input("PIN:")
 let [access_token, access_token_secret] = oauth#accessToken(access_token_url, consumer_key, consumer_secret, request_token, request_token_secret, {"oauth_verifier": verifier})
 let status = "tweeeeeeeeeeeeeet"
-let ret = oauth#post(post_url, consumer_key, consumer_secret, access_token, access_token_secret, {"status": status})
+let ret = oauth#post(post_url, consumer_key, consumer_secret, access_token, access_token_secret, {}, {"status": status}, {})
 echo ret
