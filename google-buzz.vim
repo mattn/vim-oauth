@@ -1,7 +1,7 @@
 set rtp+=.
 
 let ctx = {}
-let configfile = expand('~/.cybozulive-vim')
+let configfile = expand('~/.google-buzz-vim')
 if filereadable(configfile)
   let ctx = eval(join(readfile(configfile), ""))
 else
