@@ -1,7 +1,7 @@
 set rtp+=webapi-vim
 
 let ctx = {}
-let configfile = expand('~/.cybozulive')
+let configfile = expand('~/.cybozulive-vim')
 if filereadable(configfile)
   let ctx = eval(join(readfile(configfile), ""))
 else
