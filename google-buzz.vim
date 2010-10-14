@@ -1,4 +1,4 @@
-set rtp+=webapi-vim
+set rtp+=.
 
 let request_token_url = "https://www.google.com/accounts/OAuthGetRequestToken"
 let access_token_url = "https://www.google.com/accounts/OAuthGetAccessToken"
@@ -10,7 +10,7 @@ let ctx = oauth#request_token(request_token_url, ctx, {"scope": "https://www.goo
 if has("win32") || has("win64")
   exe "!start rundll32 url.dll,FileProtocolHandler ".auth_url."?oauth_token=".ctx.request_token."&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz"
 else
-  call system("xdg-open '".auth_url."?oauth_token=".ctx.request_token."'")
+  call system("xdg-open '".auth_url."?oauth_token=".ctx.request_token. "&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz'")
 endif
 let verifier = input("PIN:")
 let ctx = oauth#access_token(access_token_url, ctx, {"oauth_verifier": verifier})
@@ -23,7 +23,7 @@ let data = ''
 \.' xmlns:buzz="http://schemas.google.com/buzz/2010">'
 \.'  <activity:object>'
 \.'    <activity:object-type>http://activitystrea.ms/schema/1.0/note</activity:object-type>'
-\.'    <content>Bzz! Bzz!</content>'
+\.'    <content>ばず! ばず!</content>'
 \.'  </activity:object>'
 \.'</entry>'
 let ret = oauth#post(post_url, ctx, {}, data, {"Content-Type": "application/atom+xml", "GData-Version": "2.0"})
