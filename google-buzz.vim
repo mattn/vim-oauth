@@ -1,21 +1,32 @@
 set rtp+=.
 
-let request_token_url = "https://www.google.com/accounts/OAuthGetRequestToken"
-let access_token_url = "https://www.google.com/accounts/OAuthGetAccessToken"
-let auth_url = "https://www.google.com/buzz/api/auth/OAuthAuthorizeToken"
-let post_url = "https://www.googleapis.com/buzz/v1/activities/@me/@self"
-
-let ctx = {"consumer_key": $CONSUMER_KEY, "consumer_secret": $CONSUMER_SECRET, "domain": $CONSUMER_DOMAIN, "callback": $CONSUMER_CALLBACK}
-let ctx = oauth#request_token(request_token_url, ctx, {"scope": "https://www.googleapis.com/auth/buzz", "oauth_callback": ctx.callback})
-if has("win32") || has("win64")
-  exe "!start rundll32 url.dll,FileProtocolHandler ".auth_url."?oauth_token=".ctx.request_token."&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz"
+let ctx = {}
+let configfile = expand('~/.cybozulive-vim')
+if filereadable(configfile)
+  let ctx = eval(join(readfile(configfile), ""))
 else
-  call system("xdg-open '".auth_url."?oauth_token=".ctx.request_token. "&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz'")
+  let ctx.consumer_key = input("consumer_key:")
+  let ctx.consumer_secret = input("consumer_secret:")
+  let ctx.domain = input("domain:")
+  let ctx.callback = input("callback:")
+
+  let request_token_url = "https://www.google.com/accounts/OAuthGetRequestToken"
+  let auth_url = "https://www.google.com/buzz/api/auth/OAuthAuthorizeToken"
+  let access_token_url = "https://www.google.com/accounts/OAuthGetAccessToken"
+
+  let ctx = {"consumer_key": $CONSUMER_KEY, "consumer_secret": $CONSUMER_SECRET, "domain": $CONSUMER_DOMAIN, "callback": $CONSUMER_CALLBACK}
+  let ctx = oauth#request_token(request_token_url, ctx, {"scope": "https://www.googleapis.com/auth/buzz", "oauth_callback": ctx.callback})
+  if has("win32") || has("win64")
+    exe "!start rundll32 url.dll,FileProtocolHandler ".auth_url."?oauth_token=".ctx.request_token."&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz"
+  else
+    call system("xdg-open '".auth_url."?oauth_token=".ctx.request_token. "&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz'")
+  endif
+  let verifier = input("VERIFIER:")
+  let ctx = oauth#access_token(access_token_url, ctx, {"oauth_verifier": verifier})
+  call writefile([string(ctx)], configfile)
 endif
-let verifier = input("PIN:")
-let ctx = oauth#access_token(access_token_url, ctx, {"oauth_verifier": verifier})
-echo ctx.access_token
-echo ctx.access_token_secret
+
+let post_url = "https://www.googleapis.com/buzz/v1/activities/@me/@self"
 let data = ''
 \.'<entry xmlns:activity="http://activitystrea.ms/spec/1.0/"'
 \.' xmlns:poco="http://portablecontacts.net/ns/1.0"'
