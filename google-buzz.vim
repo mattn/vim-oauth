@@ -11,10 +11,9 @@ else
   let ctx.callback = input("callback:")
 
   let request_token_url = "https://www.google.com/accounts/OAuthGetRequestToken"
-  let auth_url = "https://www.google.com/buzz/api/auth/OAuthAuthorizeToken"
+  let auth_url = "https://www.google.com/accounts/OAuthAuthorizeToken"
   let access_token_url = "https://www.google.com/accounts/OAuthGetAccessToken"
 
-  let ctx = {"consumer_key": $CONSUMER_KEY, "consumer_secret": $CONSUMER_SECRET, "domain": $CONSUMER_DOMAIN, "callback": $CONSUMER_CALLBACK}
   let ctx = oauth#request_token(request_token_url, ctx, {"scope": "https://www.googleapis.com/auth/buzz", "oauth_callback": ctx.callback})
   if has("win32") || has("win64")
     exe "!start rundll32 url.dll,FileProtocolHandler ".auth_url."?oauth_token=".ctx.request_token."&domain=".ctx.domain."&scope=https://www.googleapis.com/auth/buzz"
